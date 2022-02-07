@@ -1,0 +1,18 @@
+{
+  "name": "nft-tutorial",
+  "version": "1.0.0",
+  "description": "forge create contractName",
+  "main": "_scripts.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "deploy": "node ./_scripts.js deploy",
+    "build": "forge build --force"
+  },
+  "author": "FredCoen",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
+}
