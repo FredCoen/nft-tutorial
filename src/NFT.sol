@@ -4,9 +4,10 @@ pragma solidity 0.8.10;
 import "solmate/tokens/ERC721.sol";
 import "openzeppelin-contracts/contracts/utils/Counters.sol";
 import "openzeppelin-contracts/contracts/utils/Strings.sol";
+import "openzeppelin-contracts/contracts/security/PullPayment.sol";
+import "openzeppelin-contracts/contracts/access/Ownable.sol";
 
-
-contract NFT is ERC721 {
+contract NFT is ERC721, PullPayment, Ownable {
     using Counters for Counters.Counter;
     using Strings for uint256;
     Counters.Counter private currentTokenId;
@@ -19,7 +20,7 @@ contract NFT is ERC721 {
 
     constructor(string memory _name,
         string memory _symbol,
-        string memory _baseURI) ERC721("NFTTutorial", "NFT") {
+        string memory _baseURI) ERC721(_name, _symbol) {
         baseURI = _baseURI;
     }
     
@@ -39,5 +40,10 @@ contract NFT is ERC721 {
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(ownerOf[tokenId] != address(0), "ERC721Metadata: URI query for nonexistent token");
         return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tokenId.toString())) : "";
+    }
+
+    /// @dev Overridden in order to make it an onlyOwner function
+    function withdrawPayments(address payable payee) public override onlyOwner virtual {
+        super.withdrawPayments(payee);
     }
 }
