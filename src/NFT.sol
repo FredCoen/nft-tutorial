@@ -16,19 +16,19 @@ contract NFT is ERC721, PullPayment, Ownable {
     uint256 public constant TOTAL_SUPPLY = 10_000;
     uint256 public constant MINT_PRICE = 0.08 ether;
 
-
-
-    constructor(string memory _name,
+    constructor(
+        string memory _name,
         string memory _symbol,
-        string memory _baseURI) ERC721(_name, _symbol) {
+        string memory _baseURI
+    ) ERC721(_name, _symbol) {
         baseURI = _baseURI;
     }
-    
-    function mintTo(address recipient)
-        public payable
-        returns (uint256)
-    {    
-        require(msg.value == MINT_PRICE, "Transaction value did not equal the mint price");
+
+    function mintTo(address recipient) public payable returns (uint256) {
+        require(
+            msg.value == MINT_PRICE,
+            "Transaction value did not equal the mint price"
+        );
         uint256 tokenId = currentTokenId.current();
         require(tokenId < TOTAL_SUPPLY, "Max supply reached");
         currentTokenId.increment();
@@ -37,13 +37,25 @@ contract NFT is ERC721, PullPayment, Ownable {
         return newItemId;
     }
 
-    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-        require(ownerOf[tokenId] != address(0), "ERC721Metadata: URI query for nonexistent token");
-        return bytes(baseURI).length > 0 ? string(abi.encodePacked(baseURI, tokenId.toString())) : "";
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        virtual
+        override
+        returns (string memory)
+    {
+        require(
+            ownerOf[tokenId] != address(0),
+            "ERC721Metadata: URI query for nonexistent token"
+        );
+        return
+            bytes(baseURI).length > 0
+                ? string(abi.encodePacked(baseURI, tokenId.toString()))
+                : "";
     }
 
     /// @dev Overridden in order to make it an onlyOwner function
-    function withdrawPayments(address payable payee) public override onlyOwner virtual {
+    function withdrawPayments(address payable payee) public override onlyOwner {
         super.withdrawPayments(payee);
     }
 }
