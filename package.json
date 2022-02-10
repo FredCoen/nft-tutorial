@@ -8,11 +8,20 @@
   },
   "scripts": {
     "deploy": "node ./_scripts.js deploy",
-    "build": "forge build --force"
+    "build": "forge build --force",
+    "mint": "node ./_scripts.js mint",
+    "solhint": "./node_modules/.bin/solhint -f table src",
+    "prettier:solidity": "./node_modules/.bin/prettier --write src"
   },
   "author": "FredCoen",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "prettier-plugin-solidity": "*",
+    "solhint": "^3.3.7",
+    "solhint-plugin-prettier": "^0.0.5"
   }
 }
