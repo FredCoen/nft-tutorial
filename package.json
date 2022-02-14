@@ -9,7 +9,7 @@
   "scripts": {
     "deploy": "node ./_scripts.js deploy",
     "build": "forge build --force",
-    "mint": "node ./_scripts.js mint",
+    "send": "node ./_scripts.js send",
     "solhint": "./node_modules/.bin/solhint -f table src",
     "prettier:solidity": "./node_modules/.bin/prettier --write src"
   },

@@ -3,47 +3,6 @@ require('dotenv').config();
 
 const commandlineArgs = process.argv.slice(2);
 
-function parseArgs(rawArgs, numFixedArgs, expectedOptions) {
-  const fixedArgs = [];
-  const options = {};
-  const extra = [];
-  const alreadyCounted = {};
-  for (let i = 0; i < rawArgs.length; i++) {
-    const rawArg = rawArgs[i];
-    if (rawArg.startsWith('--')) {
-      const optionName = rawArg.slice(2);
-      const optionDetected = expectedOptions[optionName];
-      if (!alreadyCounted[optionName] && optionDetected) {
-        alreadyCounted[optionName] = true;
-        if (optionDetected === 'boolean') {
-          options[optionName] = true;
-        } else {
-          i++;
-          options[optionName] = rawArgs[i];
-        }
-      } else {
-        if (fixedArgs.length < numFixedArgs) {
-          throw new Error(
-            `expected ${numFixedArgs} fixed args, got only ${fixedArgs.length}`
-          );
-        } else {
-          extra.push(rawArg);
-        }
-      }
-    } else {
-      if (fixedArgs.length < numFixedArgs) {
-        fixedArgs.push(rawArg);
-      } else {
-        for (const opt of Object.keys(expectedOptions)) {
-          alreadyCounted[opt] = true;
-        }
-        extra.push(rawArg);
-      }
-    }
-  }
-  return {options, extra, fixedArgs};
-}
-
 function execute(command) {
     return new Promise((resolve, reject) => {
       const onExit = (error) => {
@@ -60,16 +19,28 @@ function execute(command) {
   }
 
 async function performAction(rawArgs){
-  const firstArg = rawArgs[0];
+  const action = rawArgs[0];
   const args = rawArgs.slice(1);
+  if (action === 'deploy') {
+    await execute(
+      `forge create NFT --rpc-url=${process.env['RPC_URL']} --private-key=${process.env['PRIVATE_KEY']} --constructor-args ${args.join(' ')} --force`
+    );
+  }
+  if (action === 'send') {
+    console.log(typeof(args[0]))
+    console.log(args[1])
 
-    if (firstArg === 'deploy') {
+    console.log(typeof(args[2]))
 
-      const {fixedArgs: constructorArgs, extra} = parseArgs(args, 3, {});
-      await execute(
-        `forge create NFT --rpc-url=${process.env['RPC_URL']} --private-key=${process.env['PRIVATE_KEY']} --constructor-args ${constructorArgs.join(' ')} --force`
-      );
-    }
+    await execute(
+      `cast send --rpc-url=${process.env['RPC_URL']} --private-key=${process.env['PRIVATE_KEY']} ${args[0]} "${args[1]}" ${args.slice(2).join(' ')}`
+    );
+  }
+  if (action === 'verify') {
+    await execute(
+      `forge verify-contract src/NFT.sol:NFT 0xc8999b7014e1428e6e3d32720815d40594c60629 ${constructorArgs.join(' ')} `
+    );
+  }
 }
 
 performAction(commandlineArgs);
