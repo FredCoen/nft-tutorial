@@ -8,11 +8,11 @@ import "openzeppelin-contracts/contracts/security/PullPayment.sol";
 import "openzeppelin-contracts/contracts/access/Ownable.sol";
 
 contract NFT is ERC721, PullPayment, Ownable {
+
     using Counters for Counters.Counter;
     using Strings for uint256;
-    Counters.Counter private currentTokenId;
     string public baseURI;
-
+    Counters.Counter internal currentTokenId;
     uint256 public constant TOTAL_SUPPLY = 10_000;
     uint256 public constant MINT_PRICE = 0.08 ether;
 
@@ -25,10 +25,10 @@ contract NFT is ERC721, PullPayment, Ownable {
     }
 
     function mintTo(address recipient) public payable returns (uint256) {
-        require(
-            msg.value == MINT_PRICE,
-            "Transaction value did not equal the mint price"
-        );
+            require(
+                msg.value == MINT_PRICE,
+                "Transaction value did not equal the mint price"
+            );
         uint256 tokenId = currentTokenId.current();
         require(tokenId < TOTAL_SUPPLY, "Max supply reached");
         currentTokenId.increment();
