@@ -7,7 +7,7 @@ import "openzeppelin-contracts/contracts/utils/Strings.sol";
 import "openzeppelin-contracts/contracts/security/PullPayment.sol";
 import "openzeppelin-contracts/contracts/access/Ownable.sol";
 
-contract NFT is ERC721, PullPayment, Ownable {
+contract NftSolmate is ERC721, PullPayment, Ownable {
 
     using Counters for Counters.Counter;
     using Strings for uint256;

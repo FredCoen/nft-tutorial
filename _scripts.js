@@ -27,18 +27,8 @@ async function performAction(rawArgs){
     );
   }
   if (action === 'send') {
-    console.log(typeof(args[0]))
-    console.log(args[1])
-
-    console.log(typeof(args[2]))
-
     await execute(
       `cast send --rpc-url=${process.env['RPC_URL']} --private-key=${process.env['PRIVATE_KEY']} ${args[0]} "${args[1]}" ${args.slice(2).join(' ')}`
-    );
-  }
-  if (action === 'verify') {
-    await execute(
-      `forge verify-contract src/NFT.sol:NFT 0xc8999b7014e1428e6e3d32720815d40594c60629 ${constructorArgs.join(' ')} `
     );
   }
 }
