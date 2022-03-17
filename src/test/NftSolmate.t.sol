@@ -27,8 +27,8 @@ contract NftSolmateTests is DSTest {
     }
 
     function testFailMaxSupplyReached() public {
-        uint256 slot = stdstore.target(address(nft)).sig("currentTokenId()").depth(0).find();
-        bytes32 loc = bytes32(abi.encode(slot));
+        uint256 slot = stdstore.target(address(nft)).sig("currentTokenId()").find();
+        bytes32 loc = bytes32(slot);
         bytes32 mockedCurrentTokenId = bytes32(abi.encode(10000));
         vm.store(address(nft), loc, mockedCurrentTokenId);
         nft.mintTo{value: 0.08 ether}(address(1));
@@ -93,6 +93,6 @@ contract Receiver is ERC721TokenReceiver {
         uint256 id,
         bytes calldata data
     ) external returns (bytes4){
-        return bytes4(keccak256("onERC721Received(address,address,uint256,bytes)"));
+        return this.onERC721Received.selector;
     }
 }
