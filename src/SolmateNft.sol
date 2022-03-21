@@ -6,7 +6,7 @@ import "openzeppelin-contracts/contracts/utils/Strings.sol";
 import "openzeppelin-contracts/contracts/security/PullPayment.sol";
 import "openzeppelin-contracts/contracts/access/Ownable.sol";
 
-contract NftSolmate is ERC721, PullPayment, Ownable {
+contract SolmateNft is ERC721, PullPayment, Ownable {
 
     using Strings for uint256;
     string public baseURI;

@@ -3,21 +3,21 @@ pragma solidity 0.8.10;
 
 import "ds-test/test.sol";
 import "forge-std/stdlib.sol";
-import "../NftOZ.sol";
+import "../OpenZeppelinNft.sol";
 import "./interfaces/HEVM.sol";
 import "openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol";
 
 
-contract NftOZTests is DSTest {
+contract OpenZeppelinNftTests is DSTest {
     using stdStorage for StdStorage;
 
     Hevm private vm = Hevm(HEVM_ADDRESS);
-    NftOZ private nft;
+    OpenZeppelinNft private nft;
     StdStorage private stdstore;
 
     function setUp() public {
         // Deploy NFT contract
-        nft = new NftOZ("NFT_tutorial", "TUT", "baseUri");
+        nft = new OpenZeppelinNft("NFT_tutorial", "TUT", "baseUri");
     }
 
     function testFailNoMintPricePaid() public {

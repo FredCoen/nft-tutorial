@@ -3,19 +3,19 @@ pragma solidity 0.8.10;
 
 import "ds-test/test.sol";
 import "forge-std/stdlib.sol";
-import "../NftSolmate.sol";
+import "../SolmateNft.sol";
 import "./interfaces/HEVM.sol";
 
-contract NftSolmateTests is DSTest {
+contract SolmateNftTests is DSTest {
     using stdStorage for StdStorage;
 
     Hevm private vm = Hevm(HEVM_ADDRESS);
-    NftSolmate private nft;
+    SolmateNft private nft;
     StdStorage private stdstore;
 
     function setUp() public {
         // Deploy NFT contract
-        nft = new NftSolmate("NFT_tutorial", "TUT", "baseUri");
+        nft = new SolmateNft("NFT_tutorial", "TUT", "baseUri");
     }
 
     function testFailNoMintPricePaid() public {
