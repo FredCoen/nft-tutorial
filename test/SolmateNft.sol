@@ -2,17 +2,16 @@
 pragma solidity 0.8.10;
 
 import "forge-std/Test.sol";
-import "../OpenZeppelinNft.sol";
-import "openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol";
+import "../src/SolmateNft.sol";
 
-contract OpenZeppelinNftTests is Test {
+contract SolmateNftTests is Test {
     using stdStorage for StdStorage;
 
-    OpenZeppelinNft private nft;
+    SolmateNft private nft;
 
     function setUp() public {
         // Deploy NFT contract
-        nft = new OpenZeppelinNft("NFT_tutorial", "TUT", "baseUri");
+        nft = new SolmateNft("NFT_tutorial", "TUT", "baseUri");
     }
 
     function testFailNoMintPricePaid() public {
@@ -83,7 +82,7 @@ contract OpenZeppelinNftTests is Test {
 }
 
 
-contract Receiver is IERC721Receiver {
+contract Receiver is ERC721TokenReceiver {
     function onERC721Received(
         address operator,
         address from,
