@@ -1,19 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.10;
 
-import "ds-test/test.sol";
-import "forge-std/stdlib.sol";
-import "../OpenZeppelinNft.sol";
-import "./interfaces/HEVM.sol";
+import "forge-std/Test.sol";
+import "../src/OpenZeppelinNft.sol";
 import "openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol";
 
-
-contract OpenZeppelinNftTests is DSTest {
+contract OpenZeppelinNftTests is Test {
     using stdStorage for StdStorage;
 
-    Hevm private vm = Hevm(HEVM_ADDRESS);
     OpenZeppelinNft private nft;
-    StdStorage private stdstore;
 
     function setUp() public {
         // Deploy NFT contract

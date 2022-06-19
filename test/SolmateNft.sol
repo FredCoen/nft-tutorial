@@ -1,17 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.10;
 
-import "ds-test/test.sol";
-import "forge-std/stdlib.sol";
-import "../SolmateNft.sol";
-import "./interfaces/HEVM.sol";
+import "forge-std/Test.sol";
+import "../src/SolmateNft.sol";
 
-contract SolmateNftTests is DSTest {
+contract SolmateNftTests is Test {
     using stdStorage for StdStorage;
 
-    Hevm private vm = Hevm(HEVM_ADDRESS);
     SolmateNft private nft;
-    StdStorage private stdstore;
 
     function setUp() public {
         // Deploy NFT contract
