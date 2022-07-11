@@ -82,7 +82,7 @@ contract SolmateNftTests is Test {
 }
 
 
-contract Receiver is ERC721TokenReceiver {
+contract Receiver {
     function onERC721Received(
         address operator,
         address from,
